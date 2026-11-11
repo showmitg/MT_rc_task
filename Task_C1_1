@@ -1,0 +1,34 @@
+# C1: Serial Communication
+
+## 1. Communication architecture 
+
+Node 1 (Serial Bridge for Arduino)- dedicated bridge between the arduino port and ROS. This publishes the sensor data to the sensor data topic 
+                                    and subscribes to the led_controller topic from Node 2 to send commands to the Arduino.
+Node 2 (User interface)- this node is dedicated to the user to handle the user input and interpreted the user command to Arduino through node 1 
+led_controller - topic of Node 2
+### Block diagram
+```text
+User input
+
+   v
+
+ROS2 Node 2 (reads the user input and publish the command to topic led_controller)
+
+   v
+
+ROS2 Node 1 (subscribes to led_controller, read and write serial port)
+
+   v                            ^  (sensor data)
+
+   v     (in the meantime Node 1 publishes the sensor values)
+
+Serial communication
+
+   v  (LED control commands)     ^  (sensor data)
+ 
+Arduino[LED, Sensor]
+```
+
+QN: why two ROS2 nodes can be useful instead of putting everything into one node?
+Ans: If we merge the nodes togather the nodes access to serial port will be in one pipe, means when we are taking user input, the incoming sensor data will freeze. 
+Using 2 Nodes helps to continuously read, publish sersor data and take the user input. 
