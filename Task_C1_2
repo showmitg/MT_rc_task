@@ -12,7 +12,7 @@ The "<" sign bit is the indicator of starting of new message, and ">" is the ind
 
 QN: How would you detect an invalid or corrupted message?
 - The addition of "ASCII:" is for the detection, as the "ASCII:" is representing the sum of ascii values of the previous msgs
-from "<" upto "ASCII:". If the message is corrupted it will be easily detected through the sum of ascii number mismatch.
+after "<" upto "ASCII:". If the message is corrupted it will be easily detected through the sum of ascii number mismatch.
 
 QN: Why is choosing a well-defined communication format important?
 - Due to electrical noise and continuous raw data transfer, the data become often corrupted, so not to get any wrong data and 
