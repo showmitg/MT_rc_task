@@ -1,0 +1,20 @@
+# 2. Serial Data Design
+ reference- A:25,B:0.73,C:512,D:Hello
+QN: What format would you choose? 
+- my format <A:25|B:0.73|C:512|D:Hello|ASCII:1949>
+Here the ASCII is the ascii sum of "A:25|B:0.73|C:512|D:Hello|". 
+the "ASCII:" and "<" are not included in the ascii sum. 
+
+QN: How would the ROS2 node know where one value ends and another begins?
+- In my format the values are separated through "|" sign, the first value after "A:" is the value of A, and remaining is 
+consisting the value of B, C, D, and the ASCII is not consisting any value of the msg(It is the verification byte).
+The "<" sign bit is the indicator of starting of new message, and ">" is the indicator of ending of the message
+
+QN: How would you detect an invalid or corrupted message?
+- The addition of "ASCII:" is for the detection, as the "ASCII:" is representing the sum of ascii values of the previous msgs
+from "<" upto "ASCII:". If the message is corrupted it will be easily detected through the sum of ascii number mismatch.
+
+QN: Why is choosing a well-defined communication format important?
+- Due to electrical noise and continuous raw data transfer, the data become often corrupted, so not to get any wrong data and 
+make wrong decision, a well structured communication format is very important.
+
