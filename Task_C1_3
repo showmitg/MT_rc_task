@@ -1,0 +1,21 @@
+## 3. ROS2 Communication
+
+a. Which ROS2 node should act as a publisher and which should act as a subscriber when sending the LED command?
+- The user interface (ROS2 Node 2) node should be the publisher, it takes the user input and publishes the command to the topic LED control.
+And the Serial bridge node (ROS2 Node 1) should be the subscriber, which will receive command from the tpic and then command the Arduino.
+
+b. Which ROS2 node should publish the sensor values?
+- The serial bridge node (ROS2 Node 1) should publish the sensor values as /sensor_data/value_a, /sensor_data/value_b, /sensor_data/value_c, /sensor_data/value_d.
+
+c. Explain the difference between a ROS2 topic, publisher, and subscriber.
+- Topic- A communication channel, through which Nodes exchange messages in specific format (ex: std_msgs/msg/Int64). Which also have specific name.
+- publisher- A feature of Node, which produces and sends data to specific topic.
+- Subscriber- A feature of Node, which listens to publisher and receives data when the publisher sends data.
+
+d. Suppose the user enters a command to turn the LED ON. Describe the complete path the command takes:
+- User -> ROS2 Node 2 (User Interface Node) -> ROS2 Node 1 (Serial Bridge Node) -> Arduino LED
+          (publishes to LED Control topic)          (through UART/ USB)                                      
+
+e. What could happen if the Arduino sends sensor data faster than the ROS2 node can process it?
+-there will be buffer overflow, the incoming start gathering in the buffer and the incoming byte get overwritten, the sensor data will be corrupted
+and overwrite. They delay sensor data will cause ROS2 node to make decision based on delay data rather than live data.
